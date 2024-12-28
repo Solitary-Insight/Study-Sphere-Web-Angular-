@@ -1,0 +1,6 @@
+.auth_page{
+min-width: 400px !important;
+/* height: calc(80vh) !important; */
+
+}
+input::placeholder { color: rgb(71, 71, 71) !important; }

@@ -1,0 +1,358 @@
+<div class="test-container container-fluid " *ngIf="!see_result">
+
+
+
+    <div class="subject-name  ">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-gradient bg-dark p-2 rounded  ">
+          <li class="breadcrumb-item  "><a style="color: white !important;" [routerLink]="urls.courses">Courses</a></li>
+          <li class="breadcrumb-item text-success"><a style="color: white !important;"
+              [routerLink]="urls.topics">Topics</a></li>
+          <li class="breadcrumb-item text-center"><a style="color: white !important;"
+              [routerLink]="urls.quizes">Quizes</a>
+          </li>
+          <li class="breadcrumb-item active text-primary" aria-current="page">{{quiz_title}}</li>
+  
+        </ol>
+      </nav>
+    </div>
+  
+    <div class="container mt-1" *ngIf="questions==null || saving=='pending'">
+      <div class="progress  m-0" >
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow=""
+              aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+      </div>
+      <p class="m-0 p-0 text-center">{{saving!=='pending'?'Loading! please wait...':'Saving records! please wait'}}</p>
+  
+  </div>
+  
+    <!-- <div class="progress " *ngIf="false">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+        aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+    </div> -->
+    <div class="topic col container position-relative">
+      <h5><span>Topic : </span>{{quiz_title}}</h5>
+      <div class="quiz-container">
+        <div class="quiz-top d-flex  justify-content-end align-items-center">
+          <div *ngIf="is_submitted || isQuizStarted" class=" variant-2 p-1 fw-bold rounded  me-1">
+            <small class="m-0 p-0" [ngClass]="!is_submitted?'text-warning':'text-success'">
+              <strong>{{is_submitted?'SUBMITTED':'Pending'}}</strong>
+            </small>
+  
+          </div>
+          <div class="remaining-time variant-2 p-1 rounded  me-1">
+            <small class="text-center d-block m-0 p-0"> Remaining Time </small>
+            <small class="m-0 p-0" [ngClass]="Left_minutes>4?'text-success':Left_minutes>0?'text-warning':'text-danger'">
+              {{Left_minutes}} Minutes {{Left_seconds}} seconds </small>
+  
+          </div>
+  
+          <div class="section">
+            <button *ngIf="!isQuizStarted" type="button" class="btn btn-primary" [disabled]="correct_questions==null" (click)="startTimer()">Start
+              Quiz</button>
+  
+          </div>
+       
+  
+        </div>
+        <div *ngIf="questions.length==0" class="alert alert-dark mt-1" role="alert">
+          Quiz is yet not ready to be attempted
+        </div>
+        <section *ngIf="isQuizStarted && current_question!=null" class="quiz-bubble container m-1">
+          <div class="row ">
+            <div *ngFor="let question of questions; index as i" class="col row   justify-content-center">
+              <div (click)="moveToQuestion(i)" [style.border]="current_question_index==i?'1px solid orange !important':''"
+                [style.backgroundColor]="question.selected_option!=null?'green':current_question_index==i?'#0F044C':'gray'"
+                class=" m-1 question-bubble rounded-circle border d-flex justify-content-center align-items-center">
+                <span class="">
+                  {{i+1}}
+                </span>
+              </div>
+            </div>
+  
+          </div>
+  
+        </section>
+        <section class="questions-slider mt-3 dark container-fluid pt-2 pb-2 rounded " *ngIf="isQuizStarted">
+  
+          <div class="question">
+            <div class="container p-2">
+              <h5> Q {{current_question_index+1}} : {{current_question!.question}} </h5>
+            </div>
+            <div class="container" [ngClass]="is_submitted || saving=='pending'?'bg-blur':''">
+  
+              <div class="row gap-3">
+  
+  
+                <section class="option  col-12  d-flex  align-items-center"
+                  (click)="current_question!.selected_option=current_question!.alpha">
+                  <span
+                    [ngClass]="current_question!.selected_option==current_question!.alpha?'variant-1 material-symbols-outlined rounded-circle':''"
+                    class=" option-circle  border rounded-circle d-block text-center  m-1">
+                    {{current_question!.selected_option==current_question!.alpha?'done':'A'}}
+                  </span>
+                  <span>{{current_question!.alpha}}</span>
+                </section>
+  
+  
+  
+                <section class="option col-12 d-flex  align-items-center"
+                  (click)="current_question!.selected_option=current_question!.beta">
+                  <span
+                    [ngClass]="current_question!.selected_option==current_question!.beta?'variant-1 material-symbols-outlined rounded-circle':''"
+                    class="  rounded-circle  option-circle border d-block text-center  m-1 ">
+                    {{current_question!.selected_option==current_question!.beta?'done':'B'}}
+                  </span>
+                  <span>{{current_question!.beta}}</span>
+                </section>
+  
+  
+                <section class="option col-12  d-flex align-items-center "
+                  (click)="current_question!.selected_option=current_question!.charlie">
+                  <span
+                    [ngClass]="current_question!.selected_option==current_question!.charlie?'variant-1 material-symbols-outlined rounded-circle':''"
+                    class="  option-circle rounded-circle border d-block text-center   m-1">
+                    {{current_question!!.selected_option==current_question!.charlie?'done':'C'}}
+                  </span>
+                  <span>{{current_question!.charlie}}</span>
+                </section>
+  
+  
+  
+  
+                <section class="option col-12  d-flex align-items-center "
+                  (click)="current_question!.selected_option=current_question!.delta">
+                  <span
+                    [ngClass]="current_question!.selected_option==current_question!.delta?'variant-1 material-symbols-outlined rounded-circle':''"
+                    class="  option-circle rounded-circle border d-block text-center  m-1">
+                    {{current_question!.selected_option==current_question!.delta?'done':'D'}}
+                  </span>
+                  <span>{{current_question!.delta}}</span>
+                </section>
+  
+  
+  
+              </div>
+            </div>
+  
+          </div>
+          <div class="questions-nav-btns container">
+  
+            <div class=" container questions-nav-btns ">
+              <div class="section d-flex justify-content-end mt-3 mb-3  row">
+                <button type="button" class="btn btn-primary col m-1"
+                  (click)="moveBackQuestion(current_question_index-1)">Previous</button>
+                <button type="button" class="btn btn-primary  col m-1"
+                  (click)="moveToQuestion(current_question_index+1)">Next</button>
+                <button *ngIf="!is_submitted " type="button" class="btn  col btn-primary m-1"
+                  (click)="submitQuiz()">Submit</button>
+                <a *ngIf="is_submitted" type="button" (click)="see_result=true" class="btn col btn-primary m-1">Go to result</a>
+  
+              </div>
+            </div>
+          </div>
+        </section>
+  
+      </div>
+      <div class="alert alert-success alert-dismissible  show position-absolute top-50 start-50 translate-middle "
+        *ngIf="is_submitted" role="alert">
+        <strong>Test submitted! </strong> Best of luck for the result!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <a *ngIf="is_submitted" type="button" (click)="see_result=true" class="btn container btn-success m-1">Go to result</a>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  <!-- --------------------------------------------------------------------------------------------- -->
+  <!-- --------------------------------------------------------------------------------------------- -->
+  <!-- --------------------------------------------------------------------------------------------- -->
+  <!-- --------------------------------------------------------------------------------------------- -->
+  <!-- --------------------------------------------------------------------------------------------- -->
+  
+  
+  <div class="test-result container" *ngIf="see_result">
+  
+    <div class="test-container">
+  
+  
+  
+      <div class="subject-name  ">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-gradient bg-dark p-2 rounded  ">
+            <li class="breadcrumb-item  "><a style="color: white !important;" [routerLink]="urls.courses">Courses</a></li>
+            <li class="breadcrumb-item text-success"><a style="color: white !important;"
+                [routerLink]="urls.topics">Topics</a></li>
+            <li class="breadcrumb-item text-center"><a style="color: white !important;"
+                [routerLink]="urls.quizes">Quizes</a>
+            </li>
+            <li class="breadcrumb-item active text-primary" aria-current="page">{{quiz_title}}</li>
+  
+          </ol>
+        </nav>
+      </div>
+  
+  
+  
+  
+      <div class="progress " *ngIf="false">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+          aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+      </div>
+      <div class="topic col  position-relative">
+        <div class="heading border-bottom  ">
+          <h4 class=" shadow-lg rounded p-2 text-center variant-1">Quiz Result </h4>
+  
+        </div>
+        <div class="container mt-1 mb-1 border-bottom ">
+          <div class="row gap-1 ">
+            <div class="col dark rounded mt-1 text-center">
+              <p class="m-0 p-0">Total Questions</p>
+              <span>{{total_questions}}</span>
+            </div>
+            <div class="col dark rounded mt-1 text-center">
+              <p class="m-0 p-0">Attempted Questions</p>
+              <span>{{correct_questions+incorrect_questions}}</span>
+            </div>
+            <div class="col dark rounded mt-1 text-center">
+              <p class="m-0 p-0">Correct Answers</p>
+              <span>{{correct_questions}}</span>
+            </div>
+            <div class="col dark rounded mt-1 text-center">
+              <p class="m-0 p-0">Incorrect Answers</p>
+              <span>{{incorrect_questions}}</span>
+            </div>
+  
+            <div class="col dark rounded mt-1 text-center">
+              <p class="m-0 p-0">Leftover Questions</p>
+              <span>{{left_over_questions}}</span>
+            </div>
+            <div class="col dark rounded mt-1 text-center">
+              <p class="m-0 p-0" >Marks</p>
+              <span>{{correct_questions}}</span>
+            </div>
+  
+  
+  
+          </div>
+        </div>
+        <h5 class=" m-2 "><span> Quiz Topic : </span>{{quiz_title}}</h5>
+  
+  
+        
+        <div class="quiz-container container">
+       
+            
+  
+            
+  
+          <section  class="quiz-bubble container m-1">
+            <div class="row ">
+              <div *ngFor="let question of questions; index as i" class="col row   justify-content-center">
+                <div (click)="moveToQuestion(i)"
+                  [style.border]="current_question_index==i?'1px solid orange !important':''"
+                  [style.backgroundColor]="question.selected_option==null?'#363636':current_question_index==i?'#0F044C':question?.selected_option==question?.correct_answer?'green':'red'"
+                  class=" m-1 question-bubble rounded-circle border d-flex justify-content-center align-items-center">
+                  <span class="">
+                    {{i+1}}
+                  </span>
+                </div>
+              </div>
+  
+            </div>
+  
+          </section>
+          <section class="questions-slider mt-3 dark container-fluid pt-2 pb-2 rounded " *ngIf="isQuizStarted">
+  
+            <div class="question">
+              <div class="container p-2">
+                <h5> Q {{current_question_index+1}} : {{current_question!.question}} </h5>
+              </div>
+              <div class="container" [ngClass]="is_submitted?'bg-blur':''">
+  
+                <div class="row gap-3">
+  
+  
+                  <section class="option  col-12  d-flex  align-items-center rounded"
+                  [ngClass]="current_question?.correct_answer==current_question?.alpha?'correct':current_question?.selected_option==current_question?.alpha?'incorrect':''"
+  
+                   >
+                    <span
+                      [ngClass]="current_question!.selected_option==current_question!.alpha?'variant-1 material-symbols-outlined rounded-circle':''"
+                      class=" option-circle  border rounded-circle d-block text-center  m-1">
+                      {{current_question!.selected_option==current_question!.alpha?'done':'A'}}
+                    </span>
+                    <span>{{current_question!.alpha}}</span>
+                  </section>
+  
+  
+  
+                  <section class="option col-12 d-flex  align-items-center rounded"
+                  [ngClass]="current_question?.correct_answer==current_question?.beta?'correct':current_question?.selected_option==current_question?.beta?'incorrect':''"
+  
+                   >
+                    <span
+                      [ngClass]="current_question!.selected_option==current_question!.beta?'variant-1 material-symbols-outlined rounded-circle':''"
+                      class="  rounded-circle  option-circle border d-block text-center  m-1 ">
+                      {{current_question!.selected_option==current_question!.beta?'done':'B'}}
+                    </span>
+                    <span>{{current_question!.beta}}</span>
+                  </section>
+  
+  
+                  <section class="option col-12  d-flex align-items-center rounded " 
+                  [ngClass]="current_question?.correct_answer==current_question?.charlie?'correct':current_question?.selected_option==current_question?.charlie?'incorrect':''"
+                   >
+                    <span
+                      [ngClass]="current_question!.selected_option==current_question!.charlie?'variant-1 material-symbols-outlined rounded-circle':''"
+                      class="  option-circle rounded-circle border d-block text-center   m-1">
+                      {{current_question!!.selected_option==current_question!.charlie?'done':'C'}}
+                    </span>
+                    <span>{{current_question!.charlie}}</span>
+                  </section>
+  
+  
+  
+  
+                  <section class="option col-12  d-flex align-items-center rounded "
+                  [ngClass]="current_question?.correct_answer==current_question?.delta?'correct':current_question?.selected_option==current_question?.delta?'incorrect':''
+                  "
+                   >
+                    <span
+                      [ngClass]="current_question!.selected_option==current_question!.delta?'variant-1 material-symbols-outlined rounded-circle':''"
+                      class="  option-circle rounded-circle border d-block text-center  m-1">
+                      {{current_question!.selected_option==current_question!.delta?'done':'D'}}
+                    </span>
+                    <span>{{current_question!.delta}}</span>
+                  </section>
+  
+  
+  
+                </div>
+              </div>
+  
+            </div>
+            <div class="questions-nav-btns container">
+  
+              <div class=" container questions-nav-btns ">
+                <div class="section d-flex justify-content-end mt-3  mb-3 row gap-1">
+                  <button type="button" class="btn btn-primary col "
+                    (click)="moveBackQuestion(current_question_index-1)">Previous</button>
+                  <button type="button" class="btn btn-primary  col"
+                    (click)="moveToQuestion(current_question_index+1)">Next</button>
+                  <button *ngIf="!is_submitted " type="button" class="btn  col btn-primary "
+                    (click)="submitQuiz()">Submit</button>
+                  <a [routerLink]="urls.quizes" *ngIf="is_submitted" type="button" class="btn col btn-primary ">Attempt Next</a>
+  
+                </div>
+              </div>
+            </div>
+          </section>
+  
+        </div>
+  
+      </div>
+    </div>
+  </div>

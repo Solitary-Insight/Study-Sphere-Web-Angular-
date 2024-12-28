@@ -1,0 +1,18 @@
+.question_container:hover{
+    scale: 1.001 !important;
+    background-color: #040d12c5  !important;
+    max-width:100vh !important;
+}
+.chats{
+    background-image: url('../assets/tetxure.jpg');
+
+}
+.hidden{
+    display:  block !important;
+}
+@media  (max-width:767px) {
+    .hidden{
+        display:  none !important;
+    }
+    
+}

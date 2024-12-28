@@ -1,0 +1,32 @@
+.option-circle{
+    width: 30px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    min-width: 30px !important;
+    
+}
+.question-bubble{
+    width: 20px  !important;
+    height: 20px !important;
+    min-height: 20PX !important;
+    min-width: 20px !important;
+    border-radius: 50% !important;
+    font-size: .9rem;
+    text-align: center;
+}
+.option:hover {
+    background-color: #aaa;
+    color: black;
+    font-weight: bold;
+    border-radius: 20px;
+}
+.selected{
+    background-color: rgb(232, 248, 9) !important;
+}
+.question-bubble:hover{
+    cursor: pointer;
+}
+
+.bg-blur{
+    pointer-events: none !important;
+}

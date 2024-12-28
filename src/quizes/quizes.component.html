@@ -1,0 +1,43 @@
+
+    <div class="subject-name  col ">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-gradient bg-dark p-2 rounded  ">
+                <li class="breadcrumb-item  "><a style="color: white !important;" routerLink="/courses/">Courses</a>
+                </li>
+                <li class="breadcrumb-item text-success"><a style="color: white !important;"
+                        [routerLink]="topic_url">Topics</a></li>
+
+                <li class="breadcrumb-item active text-primary" aria-current="page">Quizes</li>
+
+            </ol>
+        </nav>
+    </div>
+
+<div class="container-fluid">
+
+
+
+    
+    <div class="col text-center">
+        <div class="heading border-bottom  ">
+            <h4 class=" shadow-lg rounded p-2 text-center dark">Quizes</h4>
+        </div>
+        <div class="container-fluid mt-1" *ngIf="quizes==null">
+            <div class="progress  m-0" >
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow=""
+                    aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+            </div>
+            <p class="m-0 p-0 text-center">Loading! please wait...</p>
+    
+        </div>
+        <div class="topic-list container-fluid ">
+            <!-- +quiz.quiz_id -->
+            <div class="container-fluid topic-list-item bg-dark border border-secondary m-2  p-3 rounded" [routerLink]="'test/'+quiz.quiz_id+'/'+quiz.quiz_title"
+                *ngFor="let quiz of quizes;index as i">
+                <p class="text-start m-0 p-0"> <span class="me-1">{{i+1}} -</span> {{quiz.quiz_title}}</p>
+            </div>
+
+        </div>
+    </div>
+
+</div>

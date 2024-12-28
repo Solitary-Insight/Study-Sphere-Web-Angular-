@@ -1,0 +1,93 @@
+<div class="auth_page ">
+
+    <div class="container-fluid d-flex align-items-center justify-content-center  mt-3 auth_page ">
+
+        <div class=" p-1  dark rounded  justify-content-center">
+            <h4 class="m-4 text-light text-center">{{logingin?'Login':'Signup'}}</h4>
+            <div class="alert container " style="max-width: 100% !important;" [ngClass]="'alert-'+alert_type" role="alert" *ngIf="error!=''">
+                {{error}}
+              </div>
+              
+            <form #AuthForm="ngForm"  (ngSubmit)="login(AuthForm.value)"  class="d-flex  justify-content-center container">
+
+
+                <div class="">
+  
+
+
+                    <div class="input-group mb-3 col" *ngIf="!logingin">
+                        <span class="input-group-text bg-dark border-0">👤</span>
+                        <div class="form-floating">
+                            <input type="text" ngModel name="username"class="form-control border-0 text-light bg-dark" name="username" 
+                                placeholder="Username">
+                            <label class="color-primary" >Username</label>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3 col "  >
+                        <span class="input-group-text bg-dark border-0">✉️</span>
+                        <div class="form-floating">
+                            <input type="email" class="form-control border-0 text-light bg-dark"
+                            ngModel name="email"
+                                placeholder="Email address">
+                            <label >Email address</label>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3 col">
+                        <span class="input-group-text bg-dark border-0">🔒</span>
+                        <div class="form-floating">
+                            <input type="password" class="form-control border-0 text-light bg-dark" 
+                            ngModel name="password"
+                            placeholder="Password">
+                            <label >Password</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3 col" *ngIf="!logingin">
+                        <span class="input-group-text bg-dark border-0">🔑</span>
+                        <div class="form-floating ">
+                            <input type="password" class="form-control border-0 text-light bg-dark" 
+                            ngModel name="password_retry"
+                                placeholder="Re-enter password">
+                            <label >Re-enter password</label>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="input-group mb-3 " *ngIf="logingin">
+                        <div class="input-group-text dark-elevated-card p-0 m-0  border-0" style="background-color: transparent !important;">
+
+                            <input class="form-check-input mt-0 p-0" type="checkbox" 
+                                aria-label="Checkbox for following text input" ngModel name="save_me">
+                            <label class="text-light ms-2" >Remember me</label>
+                        </div>
+                    </div>
+
+
+
+                    <p class="text-center" *ngIf="logingin">Do not have an account ?<span class="text-primary fw-bold" (click)="logingin=!logingin">  Signin</span></p>
+                    <p class="text-center" *ngIf="!logingin">Already have an account ?<span class="text-primary fw-bold" (click)="logingin=!logingin">  Login</span></p>
+                   <div class="container p-2">
+                    <button type="submit" class="container  btn btn-primary" *ngIf="logingin" > Login</button>
+                    <button type="submit" class="container  btn btn-primary" *ngIf="!logingin" > Signup</button>
+
+                   </div>
+                        
+                    
+    
+                </div>
+
+
+          
+
+            </form>
+
+
+
+
+
+
+        </div>
+    </div>
+</div>

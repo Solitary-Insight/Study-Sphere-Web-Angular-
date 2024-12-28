@@ -1,0 +1,356 @@
+<div class="container-fluid rounded"   style="height: 100vh !important">
+    <div *ngIf="disputed_questions.length==0" class="alert alert-dark mt-1" role="alert">
+       No disputed or ambigious question is still reported by any student
+      </div>
+    <div class="row  "  style="height: 100% !important">
+
+
+
+        <div class="col-md-5 col-sm-12 col-lg-4 border-end border-primary"
+        [ngClass]="class_chat_list"
+            style="height: 100% !important;overflow: scroll !important">
+            <!-- disputed_question_list -->
+
+            <div class="p-1  rounded border-bottom border-secondary shadow   mb-1  question_container"
+                *ngFor="let item of disputed_questions;" [ngClass]="current_item?.dispute_id==item.dispute_id?'variant-2':'bg-dark'" (click)="loadChats(item)">
+                <img src="../assets/profile-image.png" height="40px" width="40px" class="rounded-circle border "
+                alt="">
+                <small> {{item.highlighted_by}}</small>
+
+                <div class="list_item d-flex justify-content-end">
+
+                    <small>{{item.sharing_time}}</small>
+                </div>
+                <div class="">
+                    <p style="padding: 0; margin: 0; font-weight: bold;" class="text-light">{{item.question}}</p>
+                    <small style="padding: 1; margin: 0;"> <span class="text-primary fw-bold">Statement :
+                        </span>{{item.statement}}</small>
+
+                </div>
+            </div>
+
+
+
+
+
+            <!-- disputed_question_list -->
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <div class="col-md-7 col-sm-12 col-lg-8      " id="chats" style="overflow: scroll !important;"
+        [ngClass]="class_chats"
+
+         >
+
+            <div class="container-fluid d-flex flex-column vh-100">
+                <div class="row flex-grow-1">
+
+                    <div class="col">
+                        <div class="  gap-1   bg-dark p-1 rounded  justify-content-between     ">
+                            <div class="d-flex align-items-center">
+                                <span class="material-symbols-outlined  d-flex m-1 logout   rounded-circle" (click)="backPressed()">
+                                    <span class="material-symbols-outlined">
+                                        arrow_back
+                                    </span>
+                                </span>
+            
+                                <img src="../assets/profile-image.png" height="40px" width="40px" class="rounded-circle border "
+                                    alt="">
+            
+            
+                                <span class=" fw-bold"> {{current_item?.highlighted_by}} </span>
+                            </div>
+            
+            
+            
+                            <div class="container bg-blur" *ngIf="current_item!=null">
+            
+                                <!-- Statement  -->
+                                <p> <span class="text-info">Statement </span> <span>:
+                                        {{current_item.statement}}</span></p>
+            
+                                <!-- Statement  -->
+            
+            
+                                <!-- Question  -->
+                                <p> <span class="text-primary">QUESTION </span> <span class="fw-bold">:
+                                        {{current_item.question}}</span></p>
+            
+                                <!-- QUESTION  -->
+            
+                                <!-- OPTIONS  -->
+            
+                                <div class="">
+            
+                                    <section class="option  col-12  d-flex  align-items-center rounded variant-1" *ngIf="current_item?.claimed_answer!=''">
+                                        <span class="   border rounded text-center  m-1">
+                                            {{'CLAIM'}}
+                                        </span>
+                                        <span>{{current_item.claimed_answer}}</span>
+                                    </section>
+            
+            
+            
+            
+            
+                                    <section class="option  col-12  d-flex  align-items-center rounded"
+                                    [ngClass]="current_item.correct_answer==current_item.alpha?'correct':''"
+            
+                                        >
+                                        <span class=" option-circle  border rounded-circle d-block text-center  m-1">
+                                            {{'A'}}
+                                        </span>
+                                        <span>{{current_item.alpha}}</span>
+                                    </section>
+            
+            
+            
+                                    <section class="option  col-12  d-flex  align-items-center rounded"
+                                    [ngClass]="current_item.correct_answer==current_item.beta?'correct':''"
+            
+                                       >
+                                        <span class=" option-circle  border rounded-circle d-block text-center  m-1">
+                                            {{'B'}}
+                                        </span>
+                                        <span>{{current_item.beta}}</span>
+                                    </section>
+            
+            
+            
+            
+                                    <section class="option  col-12  d-flex  align-items-center rounded"
+                                    [ngClass]="current_item.correct_answer==current_item.charlie?'correct':''"
+                                        >
+                                        <span class=" option-circle  border rounded-circle d-block text-center  m-1">
+                                            {{'C'}}
+                                        </span>
+                                        <span>{{current_item.charlie}}</span>
+                                    </section>
+            
+            
+            
+                                    <section class="option  col-12  d-flex  align-items-center rounded"
+                                    [ngClass]="current_item.correct_answer==current_item.delta?'correct':''"
+            
+                                       >
+                                        <span class=" option-circle  border rounded-circle d-block text-center  m-1">
+                                            {{'D'}}
+                                        </span>
+                                        <span>{{current_item.delta}}</span>
+                                    </section>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                                </div>
+            
+                                <!-- OPTIONS  -->
+            
+            
+            
+            
+            
+                                <!-- horizontal break -->
+                                <div class="bg-light rounded m-3" style="padding: 2px !important;"></div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                                <!-- chats -->
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                                <!-- chats -->
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                            </div>
+            
+            
+            
+                        </div>
+                        <div class="child-content">
+                            <div class="container-fluid rounded pb-2 position-relative pb-5  " >
+                                <div class="position-fixed   bottom-0  "  *ngIf="current_item!=null">
+                                        <form #chatSend="ngForm" class="row gap-1 me-2 mb-5">
+                
+                                            <div class="col-auto">
+                                               <button  type="button" class=" btn btn-danger me-1 ms-1" (click)="backPressed()" > back</button>
+                                            </div>
+                                            <div class="col">
+                                                <label for="message" class="visually-hidden">Message</label>
+                                                <input ngModel type="text" class="form-control" id="message" name="message" placeholder="Message">
+                                            </div>
+                                            <div ngsum (click)="postMessage(chatSend);" class="col-auto  rounded-circle bg-success d-flex align-items-center justify-content-center">
+                                                <span class="fs-12 text-dark material-symbols-outlined ">
+                                                    send
+                                                </span>
+                                            </div>
+                                        </form>
+                                </div>
+                
+                                <h5 class="text-primary m-1">Chats</h5>
+                
+                
+                
+                
+                                <div class="messages-container">
+                
+
+                
+                                    <section class=" d-flex  pb-2 " *ngFor="let message of messages"
+                                     [ngClass]="message.sender!=curr_student?.username?'justify-content-start':'justify-content-end'">
+                                        <div class="rounded p-1  message  "
+                                        [ngClass]="message.sender!=curr_student?.username?'bg-secondary':'bg-primary'"
+                                        >
+                                        <small>{{message.sender}}</small>
+                                            <p class="p-0 m-0">{{message.message}}</p>
+                                            <p class="text-end p-0 m-0">{{message.time}}</p>
+
+                                        </div>
+                                    </section>
+                
+                
+                                    
+                
+                
+                                </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                            </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                        </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            
+
+            
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+</div>

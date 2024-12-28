@@ -1,0 +1,36 @@
+<div class="subject-name  ">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-gradient bg-dark  p-2 rounded  ">
+            <li class="breadcrumb-item  "><a style="color: white !important;" routerLink="/courses/">Courses</a></li>
+           
+
+            <li class="breadcrumb-item active text-primary" aria-current="page">Topics</li>
+
+        </ol>
+    </nav>
+</div>
+
+<div class="text-center  ">
+    <div class="heading border-bottom  pb-2 mb-2 ">
+        <h4 class=" shadow-lg rounded m-0 text-center p-2 dark">Course Topics</h4>
+    </div>
+
+<!-- // Loader -->
+
+    <div class="container-fluid mt-1" *ngIf="Topics==null">
+        <div class="progress  m-0" >
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow=""
+                aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+        </div>
+        <p class="m-0 p-0 text-center">Loading! please wait...</p>
+
+    </div>
+
+
+    <div class="topic-list container ">
+        <div class="container topic-list-item bg-dark border border-secondary mt-2  mb-2 p-3 rounded"
+            [routerLink]="'quizes/'+topic.topic_id" *ngFor="let topic of Topics;index as i">
+            <p class="text-start m-0 p-0"> <span class="me-1">{{i+1}} -</span> {{topic.topic_name}}</p>
+        </div>
+
+    </div>

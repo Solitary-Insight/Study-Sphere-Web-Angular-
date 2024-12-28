@@ -1,0 +1,299 @@
+<div class="position-relative rounded-end border-end dark" >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="large-sidebar s-0">
+
+    <div class="side-bar mh-100 container-fluid dark rounded p-0" id="side-bar" (window:resize)="onResize($event)">
+      <div class="dots-section  d-flex p-2 dark-elevated-card rounded border position-relative">
+        <div class="dots variant-1"> </div>
+        <div class="dots variant-3"></div>
+        <div class="dots variant-2"></div>
+        
+      </div>
+
+
+
+
+
+      <div class="profile-section  container-fluid position-relative ">
+        <div class="container-fluid">
+          <div class="profile-image-container  m-1 ">
+            <div class="profile d-flex position-relative ">
+              <div class="dots variant-1 position-absolute left-0 left-0"> </div>
+
+              <img src="../assets/profile-image.png" width="50px" height="50px" alt="..."
+                class="rounded-circle p-1 m-0 border ">
+              <div class="nav-expended-section  m-1 no-hover">
+                <p class="d-block m-0 p-0">{{student==null ?'':student.username}}</p>
+                <small class="d-block width-100 m-auto">{{student==null ?'':student.role}}</small>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- <section class="comunity-section nav-link container-fluid d-block mt-3 mb-3">
+
+          <div routerLinkActive="active-expanded" routerLink="community"
+            class="nav-expended-section d-flex  p-1 align-items-center ">
+            <span class="material-symbols-outlined dark-elevated-card d-flex   p-1 mr-1 rounded-circle">
+              supervised_user_circle
+            </span>
+            <p class="m-1 p-0">Admin Menu</p>
+          </div>
+        </section> -->
+
+
+
+        <section class="dashboard-section nav-link   d-block  mt-3 mb-3">
+          <div routerLinkActive="active-expanded" routerLink="dashboard"
+            class=" nav-expended-section d-flex  p-1 align-items-center ">
+            <span class="material-symbols-outlined dark-elevated-card d-flex   p-1 mr-1 rounded-circle">
+              home
+            </span>
+            <p class="m-1 p-0">Dashboard</p>
+          </div>
+        </section>
+
+
+
+
+        <section class="course-section nav-link   d-block  mt-3 mb-3">
+          <div routerLinkActive="active-expanded" routerLink="courses"
+            class=" nav-expended-section d-flex  p-1 align-items-center ">
+            <span class="material-symbols-outlined dark-elevated-card d-flex   p-1 mr-1 rounded-circle">
+              menu_book
+            </span>
+            <p class="m-1 p-0">Courses</p>
+          </div>
+        </section>
+
+
+
+
+
+        <section class="leaderboard-section nav-link   d-block  mt-3 mb-3">
+          <div routerLinkActive="active-expanded" routerLink="leaderboard"
+            class=" nav-expended-section d-flex  p-1 align-items-center ">
+            <span class="material-symbols-outlined dark-elevated-card d-flex   p-1 mr-1 rounded-circle">
+              military_tech
+            </span>
+            <p class="m-1 p-0">Leaderboard</p>
+          </div>
+        </section>
+
+
+
+
+        <section class="comunity-section nav-link container-fluid d-block mt-3 mb-3">
+
+          <div routerLinkActive="active-expanded" routerLink="community"
+            class="nav-expended-section d-flex  p-1 align-items-center ">
+            <span class="material-symbols-outlined dark-elevated-card d-flex   p-1 mr-1 rounded-circle">
+              group
+            </span>
+            <p class="m-1 p-0">Community</p>
+          </div>
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+        <div [ngClass]="!sidebar_hidden?'incorrect':''" class="menu-icon    rounded-end  shadow-lg" (click)="sidebar_hidden=!sidebar_hidden">
+          <span class="material-symbols-outlined  ">
+          {{ sidebar_hidden?'menu':'close' }}
+          </span>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div [ngClass]="!sidebar_hidden?'condensed-icons':'hide'" class="  d-flex   mt-1 ">
+
+
+
+
+
+
+
+          <!-- ----------------------------PROFILE_IMAGE AS ICON----------------------------------- -->
+
+
+          <div class="   m-1 ">
+            <div class="profile d-flex position-relative ">
+              <div class="  position-absolute "> </div>
+              <img src="../assets/profile-image.png" width="50px" height="50px" alt="..."
+                class="rounded-circle p-1 m-0 border dark">
+            </div>
+          </div>
+
+
+
+
+          <!-- ----------------------------Nav ICons AS ICON----------------------------------- -->
+
+
+          <div class="d-flex justify-content-center m-1 ">
+            <span routerLinkActive="active-collaped" routerLink="dashboard"
+              class="material-symbols-outlined nav-ic dark d-flex border-light   p-1 rounded-circle">
+              home
+            </span>
+          </div>
+
+
+          <div class="d-flex justify-content-center m-1">
+            <span routerLinkActive="active-collaped" routerLink="courses"
+              class="material-symbols-outlined dark nav-ic d-flex   p-1 rounded-circle">
+              menu_book
+            </span>
+          </div>
+
+          <div class="d-flex justify-content-center m-1 ">
+            <span routerLinkActive="active-collaped" routerLink="leaderboard"
+              class="material-symbols-outlined dark nav-ic d-flex   p-1 rounded-circle">
+              military_tech
+            </span>
+          </div>
+
+          <div class="d-flex justify-content-center m-1 ">
+            <span routerLinkActive="active-collaped" routerLink="community"
+              class="material-symbols-outlined dark nav-ic d-flex   p-1 rounded-circle">
+              group
+            </span>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>

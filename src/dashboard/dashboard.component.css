@@ -1,0 +1,69 @@
+/* .dashboard_container{
+    min-width: 400px !important;
+} */
+
+.course_table{
+    max-width: 400px !important;
+    overflow-x: hidden !important;
+}
+
+#course_chart_container{
+    display: block;
+    width:340px;
+    height: 340px;
+}
+.quiz_chart_container{
+    display: block;
+    width:300px !important;
+    min-width:300px !important;
+    min-height: 300px !important;
+    height: 300px !important;
+}
+.quiz_chart_collapsed{
+    max-width:0px !important;
+    max-height: 0px !important;
+    display: none !important;
+}
+.help{
+    width: 30px !important;
+    height: 30px !important;
+    position: relative;
+    transition: all .5s ease ;
+}
+.logout:hover{
+    color: orangered !important;
+    scale: 1.1;
+
+}
+.help:hover{
+    color: orangered !important;
+}
+
+.help:hover.help::after{
+   content: "Ask community";
+   position: absolute;
+   height: auto;
+    font-family: 'Times New Roman', Times, serif;
+   right: 0;
+   border: 1px solid #aaa;
+   top: -30px;
+   color: white;
+   background-color: rgb(8, 8, 8);
+   font-size:1rem;
+   padding: 5px 10px;
+   border-radius: 5px;
+   margin: 0;
+}
+
+
+.popup{
+
+    z-index: 100;
+    width: 100% !important;
+    height: 100% !important;
+}
+select{
+    border: none;
+    color: white !important;
+  
+}

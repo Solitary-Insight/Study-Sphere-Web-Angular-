@@ -1,0 +1,26 @@
+.page{
+    min-width: 400px !important;
+    height: 100vh;
+    min-height: 100vh !important;
+    
+}
+
+.redir-page{
+    min-width: none;
+}
+body{
+    min-width: 400px !important;
+
+    background-color: black;
+}
+@media  (max-width: 767px) {
+ .copyright-text{
+    position: absolute;
+    width: inherit;
+    bottom: 10px;
+    left: calc(10%);
+ }
+
+ 
+    
+}

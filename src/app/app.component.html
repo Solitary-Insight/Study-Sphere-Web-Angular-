@@ -1,0 +1,32 @@
+<div class="container-fluid   page ">
+
+
+    <div class="row  ">
+
+        <app-sidebar   *ngIf="islogedIn" style="min-height: 100vh !important; position: relative; "
+            class="col-auto nav dark-elevated-card  p-0 m-0 mt-1 mb-1 " ></app-sidebar>
+
+        <div class="changing col   position-relative container-fluid dark-elevated-card container-fluid p-1 ">
+
+
+            <div class="header variant-2 d-flex container-fluid border-bottom  mb-1 p-2">
+                <img class="m-1" src="../assets/logo-web.psd.png" height="80px" width="80px" alt="">
+                <div class="d-block">
+                    <h5 class="m-0 p-0">STUDY SPHERE</h5>
+                    <p class="tagline">Sharpen Your Mind 🧠, Ace Your Exams!📚</p>
+                    <small class="m-0 p-0 copyright-text"> Copyright &copy; Developed and maintained by
+                        Infinity_Developers</small>
+
+                </div>
+
+            </div>
+            <section class="redir-page  rounded mb-5">
+
+                <router-outlet class="col mh-100  container-fluid m-0 p-0"> </router-outlet>
+
+            </section>
+
+        </div>
+    </div>
+</div>
+

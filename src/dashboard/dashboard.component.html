@@ -1,0 +1,510 @@
+<div class="width-100  ">
+  <section class="row ms-1 me-1  ">
+
+    <div class="container-fluid d-flex col bg-dark rounded align-items-center justify-content-between ">
+      <span class=" fw-bold">Dashboard </span>
+      <div class="extras d-flex gap-1  align-items-center  position-relative">
+        <span class=" ">{{student==null?'':student.username}} </span>
+
+
+        <img src="../assets/profile-image.png" height="40px" width="40px" class="rounded-circle border " alt="">
+        <span class="material-symbols-outlined  d-flex logout   rounded-circle" (click)="logout=!logout">
+          logout
+        </span>
+
+
+        <!-- ------------------------------logout dialog---------------------------------------------- -->
+        <div class="position-absolute bottom-0 start-0 bg-dark border border-light p-1 rounded" *ngIf="logout">
+          <div class="d-flex  justify-content-between">
+            <p>Are you sure to logout?</p>
+            <span class="material-symbols-outlined  d-flex logout   rounded-circle" style="color: red !important;"
+              (click)="logout=!logout">
+              close
+            </span>
+          </div>
+
+          <button type="button" class="container btn btn-danger btn-sm" (click)="logoutNow()">logout</button>
+
+
+        </div>
+        <!-- ------------------------------logout dialog---------------------------------------------- -->
+
+
+      </div>
+    </div>
+  </section>
+
+
+</div>
+<div class="container-fluid dashboard_container">
+
+
+  <section class="container-fluid mt-1">
+    <div class="row gap-1">
+
+      <div class="col  border-light bg-dark rounded ">
+        <h5 class="text-primary m-1">Courses</h5>
+        <div class="container-fluid mt-1 " *ngIf="dashboard_course_item.length==0">
+          <div class="progress progress-light m-0">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow=""
+              aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+          </div>
+          <p class="m-0 p-0 text-center">Loading! please wait...</p>
+
+        </div>
+        <table class="table    table-hover table-dark">
+          <thead>
+            <tr>
+              <th scope="col">#ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Total Quizes</th>
+              <th scope="col">Attempted</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+
+            <tr [ngClass]="" *ngFor="let course of dashboard_course_item" (click)="current_course=course">
+              <td>{{course.course_id}}</td>
+              <td>{{course.course_name}}</td>
+              <td>{{course.total_quizes}}</td>
+              <td>{{course.attempted_quizes?.length}}</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+      
+      </div>
+
+
+
+      <section class=" col-sm-12 col-md-auto container-fluid  bg-dark rounded p-1">
+        <div id="course_chart_container" class="d-flex container-fluid justify-content-center">
+          <canvas id="course_chart"></canvas>
+        </div>
+       
+      </section>
+
+
+
+
+      <div class="col  border-light bg-dark rounded " *ngIf="current_course?.attempted_quizes?.length!=null">
+        <h5 class="text-primary m-1">Attempted Quizes
+          <span>{{current_course?.attempted_quizes?.length}}/{{current_course?.total_quizes}}</span>
+        </h5>
+        <div class="container-fluid mt-1 " *ngIf="dashboard_course_item.length==0">
+          <div class="progress progress-light m-0">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow=""
+              aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+          </div>
+          <p class="m-0 p-0 text-center">Loading! please wait...</p>
+
+        </div>
+        <div class="alert alert-primary" role="alert" *ngIf="current_course?.attempted_quizes?.length==0">
+          Sorry You haven't attempted any quiz for this course
+        </div>
+        <table class="table    table-hover table-dark" *ngIf="current_course?.attempted_quizes?.length!=0">
+          <thead>
+            <tr>
+              <th scope="col">#ID</th>
+              <th scope="col">#Topic ID</th>
+              <th scope="col">Quiz Title</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+
+
+            <tr *ngFor="let Quiz of current_course?.attempted_quizes" (click)="loadQuiz(Quiz,student.student_id)">
+              <td>{{Quiz.quiz_id}}</td>
+              <td>{{Quiz.topic_id}}</td>
+              <td>{{Quiz.quiz_title}}</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+  </section>
+
+  <div class="col-12  mt-1 " *ngIf="result_loading==true">
+    <div class="progress progress-light m-0">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow=""
+        aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+    </div>
+    <p class="m-0 p-0 text-center">Loading! please wait...</p>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="bg-dark rounded " *ngIf="current_course!=null">
+
+
+
+
+    <!-- ==============================----------------------------==========================================================------------------------------- -->
+    <!-- ==============================----------------------------==========================================================------------------------------- -->
+    <!-- ==============================----------------------------==========================================================------------------------------- -->
+    <!-- ==============================----------------------------==========================================================------------------------------- -->
+    <!-- ==============================----------------------------==========================================================------------------------------- -->
+    <!-- ==============================----------------------------==========================================================------------------------------- -->
+    <!-- experimental  -->
+    <h5 class="text-primary p-2 mt-2  ">Quiz Result :
+      <span class=" text-success "> {{selected_quiz==null?null:selected_quiz.quiz_title}}</span>
+    </h5>
+    <div class="container position-relative">
+
+    <div class="container  position-absolute bottom-0 end-0 start-0 " style="z-index: 1500 !important;" *ngIf="disputeAlertVisiblity">
+      <div class="alert text-center" [ngClass]="'alert-'+disputeAlertType" role="alert" >
+        {{disputeUploadMessage}} <a *ngIf="disputeAlertLink!=''" [routerLink]="disputeAlertLink" class="alert-link">Community Discussion</a> {{disputeAlertLink!=''?"Find community messages here.":''}}
+      </div>
+    </div>
+    <div class="col-12  mt-1 " *ngIf="upload_dispute">
+      <div class="progress progress-light m-0">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow=""
+          aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+      </div>
+      <p class="m-0 p-0 text-center">Saving! please wait...</p>
+  
+    </div>
+
+
+
+      <div class="row align-items-center justify-content-center  gap-1 p-1  mt-2">
+
+
+        <div [ngClass]="selected_quiz==null?'quiz_chart_collapsed':'col quiz_chart_container'">
+
+          <canvas id="quiz_chart"></canvas>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="col  p-2 rounded"><!-- question column -->
+
+          <div class="container">
+            <div class="row align-items-center  rounded p-1" *ngIf="selected_quiz!=null">
+              <div class="col-12 d-flex variant-2 rounded">
+                <div *ngFor="let question of selected_quiz.questions; index as i" class="col    justify-content-center">
+                  <div (click)="selected_quiz.current_index=i"
+                    [style.border]="selected_quiz.current_index==i?'1px solid orange !important':''"
+                    [style.backgroundColor]="question.selected_option==null?'#363636':selected_quiz.current_index==i?'#0F044C':question?.selected_option==question?.correct_answer?'green':'red'"
+                    class=" m-1 question-bubble rounded-circle border d-flex justify-content-center align-items-center">
+                    <span class="">
+                      {{i+1}}
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+
+
+
+
+              <div class="col   d-flex align-items-left container-fluid position-relative  rounded p-1">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- popup -->
+                <div class="popup position-absolute top-0 e-0 s-0 " *ngIf="popup">
+                  <div class="container rounded dark border border-info p-2 position-relative">
+                    <h5 class="text-primary m-1">Ask community</h5>
+
+                    <div class="d-flex gap-1 justify-content-between">
+                      <span class="text-primary fw-bold">Question <span
+                          class="text-warning">{{selected_quiz.current_index+1}}</span>:
+                        <span
+                          class="text-light  ">{{selected_quiz.questions[selected_quiz.current_index].question}}</span></span>
+                      <div class="position-absolute end-0 top-0" *ngIf="popup">
+                        <span style="color: red;" class="material-symbols-outlined  rounded-circle"
+                          (click)="closePopup()">
+                          close
+                        </span>
+                      </div>
+
+                    </div>
+                    <div class="border-bottom border-info m-1"></div>
+                    <span class="text-success m-1 fw-bold">Correct Answer :
+                      <span
+                        class="text-light fw-normal">{{selected_quiz.questions[selected_quiz.current_index].correct_answer}}</span>
+                    </span>
+                   
+                    <form action="" #dispute_statement="ngForm"
+                      >
+                      <div class="m-1">
+                        <span class="text-warning fw-bold">Your claim : </span>
+  
+                        <select name="" id="" class="p-1 rounded color-light bg-dark" ngModel name="claimed_answer">
+                          <option value="">Claim your answer (if any)</option>
+                          <option [value]="selected_quiz.questions[selected_quiz.current_index].alpha">
+                            {{selected_quiz.questions[selected_quiz.current_index].alpha}}</option>
+                          <option [value]="selected_quiz.questions[selected_quiz.current_index].beta">
+                            {{selected_quiz.questions[selected_quiz.current_index].beta}}</option>
+                          <option [value]="selected_quiz.questions[selected_quiz.current_index].charlie">
+                            {{selected_quiz.questions[selected_quiz.current_index].charlie}}
+                          </option>
+                          <option [value]="selected_quiz.questions[selected_quiz.current_index].delta">
+                            {{selected_quiz.questions[selected_quiz.current_index].delta}}</option>
+  
+  
+                        </select>
+  
+  
+                      </div>
+                      <div class="">
+                        <label for="exampleFormControlTextarea1" class="form-label">Statement 🔽</label>
+                        <textarea ngModel class="form-control" name="statement" id="" rows="3"></textarea>
+
+                      </div>
+
+                      <div class="d-flex container justify-content-end  mt-2 ">
+                        <div class="d-flex align-items-center text-warning fs-14 btn btn-primary " 
+                        (click)="share(selected_quiz.questions[selected_quiz.current_index],dispute_statement.value)"
+                        >
+
+                          <span>Share</span>
+                          <span class="material-symbols-outlined ">
+                            send
+                          </span>
+                        </div>
+
+                      </div>
+
+                    </form>
+
+
+
+                  </div>
+
+
+
+
+                </div>
+                <!-- popup -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- result Questions  -->
+
+                <section class="questions-slider  dark container-fluid pt-2 pb-2 rounded  " *ngIf="selected_quiz!=null">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  <div class="question">
+                    <div class=" p-2 gap-1 d-flex justify-content-between">
+                      <h5> Q {{selected_quiz.current_index+1}} :
+                        {{selected_quiz.questions[selected_quiz.current_index].question}} </h5>
+
+                      <span class="material-symbols-outlined text-primary help" *ngIf="!popup" (click)="popup=!popup">
+                        help
+                      </span>
+
+
+                    </div>
+
+
+
+
+                    <div class="container-fluid">
+
+                      <div class="row gap-3">
+
+
+                        <section class="  col-12  d-flex  align-items-center rounded"
+                          [ngClass]="selected_quiz.questions[selected_quiz.current_index].correct_answer==selected_quiz.questions[selected_quiz.current_index].alpha?'correct':selected_quiz.questions[selected_quiz.current_index].selected_option==selected_quiz.questions[selected_quiz.current_index].alpha?'incorrect':''">
+                          <span
+                            [ngClass]="selected_quiz.questions[selected_quiz.current_index]!.selected_option==selected_quiz.questions[selected_quiz.current_index]!.alpha?'variant-1 material-symbols-outlined rounded-circle':''"
+                            class=" option-circle  border rounded-circle d-block text-center  m-1">
+                            {{selected_quiz.questions[selected_quiz.current_index]!.selected_option==selected_quiz.questions[selected_quiz.current_index]!.alpha?'done':'A'}}
+                          </span>
+                          <span>{{selected_quiz.questions[selected_quiz.current_index]!.alpha}}</span>
+                        </section>
+
+
+
+                        <section class=" col-12 d-flex  align-items-center rounded"
+                          [ngClass]="selected_quiz.questions[selected_quiz.current_index].correct_answer==selected_quiz.questions[selected_quiz.current_index].beta?'correct':selected_quiz.questions[selected_quiz.current_index].selected_option==selected_quiz.questions[selected_quiz.current_index].beta?'incorrect':''">
+                          <span
+                            [ngClass]="selected_quiz.questions[selected_quiz.current_index]!.selected_option==selected_quiz.questions[selected_quiz.current_index]!.beta?'variant-1 material-symbols-outlined rounded-circle':''"
+                            class="  rounded-circle  option-circle border d-block text-center  m-1 ">
+                            {{selected_quiz.questions[selected_quiz.current_index]!.selected_option==selected_quiz.questions[selected_quiz.current_index]!.beta?'done':'B'}}
+                          </span>
+                          <span>{{selected_quiz.questions[selected_quiz.current_index]!.beta}}</span>
+                        </section>
+
+
+                        <section class=" col-12  d-flex align-items-center rounded "
+                          [ngClass]="selected_quiz.questions[selected_quiz.current_index].correct_answer==selected_quiz.questions[selected_quiz.current_index].charlie?'correct':selected_quiz.questions[selected_quiz.current_index].selected_option==selected_quiz.questions[selected_quiz.current_index].charlie?'incorrect':''">
+                          <span
+                            [ngClass]="selected_quiz.questions[selected_quiz.current_index]!.selected_option==selected_quiz.questions[selected_quiz.current_index]!.charlie?'variant-1 material-symbols-outlined rounded-circle':''"
+                            class="  option-circle rounded-circle border d-block text-center   m-1">
+                            {{selected_quiz.questions[selected_quiz.current_index].selected_option==selected_quiz.questions[selected_quiz.current_index].charlie?'done':'C'}}
+                          </span>
+                          <span>{{selected_quiz.questions[selected_quiz.current_index]!.charlie}}</span>
+                        </section>
+
+
+
+
+                        <section class=" col-12  d-flex align-items-center rounded "
+                          [ngClass]="selected_quiz.questions[selected_quiz.current_index].correct_answer==selected_quiz.questions[selected_quiz.current_index].delta?'correct':selected_quiz.questions[selected_quiz.current_index].selected_option==selected_quiz.questions[selected_quiz.current_index].delta?'incorrect':''">
+                          <span
+                            [ngClass]="selected_quiz.questions[selected_quiz.current_index]!.selected_option==selected_quiz.questions[selected_quiz.current_index]!.delta?'variant-1 material-symbols-outlined rounded-circle':''"
+                            class="  option-circle rounded-circle border d-block text-center  m-1">
+                            {{selected_quiz.questions[selected_quiz.current_index]!.selected_option==selected_quiz.questions[selected_quiz.current_index]!.delta?'done':'D'}}
+                          </span>
+                          <span>{{selected_quiz.current_question!.delta}}</span>
+                        </section>
+
+
+
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="questions-nav-btns container" [style.visibility]="popup?'hidden':'visible'">
+
+                    <div class=" container questions-nav-btns ">
+                      <div class="section d-flex justify-content-end mt-3  mb-3 row gap-1">
+                        <button type="button" class="btn btn-primary col "
+                          (click)="selected_quiz.current_index>0?selected_quiz.current_index=selected_quiz.current_index=selected_quiz.current_index-1:null">Previous</button>
+                        <button type="button" class="btn btn-primary  col"
+                          (click)="selected_quiz.current_index<selected_quiz.questions.length-1?selected_quiz.current_index=selected_quiz.current_index+1:null">Next</button>
+
+                        <a (click)="selected_quiz=null" type="button" class="btn col btn-primary ">Close</a>
+
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- result Questions  -->
+
+              </div>
+
+
+            </div><!-- question column -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+</div>

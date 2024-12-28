@@ -1,0 +1,7 @@
+.topic-list-item{
+    transition: all .5s ease;
+}
+.topic-list-item:hover{
+    background-color: #09033f !important;
+    border: none !important;
+}

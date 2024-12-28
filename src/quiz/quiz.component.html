@@ -1,0 +1,124 @@
+
+<div class="container  " >
+    <div class="subject-name">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-gradient p-2 rounded  ">
+          <li class="breadcrumb-item  "><a style="color: white !important;" routerLink="/courses">Courses</a></li>
+          <li class="breadcrumb-item text-success"><a style="color: white !important;"  routerLink="/courses/topics/:">Topics</a></li>
+          <li class="breadcrumb-item text-center"><a style="color: white !important;"   routerLink="/courses/quizes">Quizes</a></li>
+          <li class="breadcrumb-item active text-primary" aria-current="page">Quiz_2</li>
+          
+        </ol>
+      </nav>
+    </div>
+   
+  </div>
+  
+  
+  <div class="topic container position-relative" >
+    <h5><span>Topic : </span>Reproduction in animals</h5>
+    <div class="quiz-container">
+      <div class="quiz-top d-flex  justify-content-end align-items-center">
+        <div *ngIf="is_submitted || isQuizStarted" class=" variant-2 p-1 fw-bold rounded  me-1">
+          <small class="m-0 p-0" [ngClass]="!is_submitted?'text-warning':'text-success'">
+            <strong>{{is_submitted?'SUBMITTED':'Pending'}}</strong>  
+            </small> 
+  
+        </div>
+        <div class="remaining-time variant-2 p-1 rounded  me-1">
+          <small class="text-center d-block m-0 p-0"> Remaining Time </small>
+          <small class="m-0 p-0" [ngClass]="Left_minutes>4?'text-success':Left_minutes>0?'text-warning':'text-danger'">
+            {{Left_minutes}} Minutes {{Left_seconds}} seconds </small>
+  
+        </div>
+        
+        <div class="section">
+          <button *ngIf="!isQuizStarted" type="button" class="btn btn-primary" (click)="startTimer()">Start Quiz</button>
+  
+        </div>
+  
+      </div>
+      <section *ngIf="isQuizStarted" class="quiz-bubble container m-1">
+        <div class="row ">
+          <div *ngFor="let question of questions; index as i" class="col row   justify-content-center">
+            <div (click)="moveToQuestion(i)" [style.border]="current_question_index==i?'1px solid orange !important':''" [style.backgroundColor]="question.selected_option!=null?'green':current_question_index==i?'#0F044C':'gray'"
+              class=" m-1 question-bubble rounded-circle border d-flex justify-content-center align-items-center">
+              <span class="">
+                {{i+1}}
+              </span>
+            </div>
+          </div>
+  
+        </div>
+  
+      </section>
+      <section class="questions-slider mt-3 dark container-fluid pt-2 pb-2 rounded "  *ngIf="isQuizStarted">
+       
+        <div class="question">
+          <div class="container p-2">
+            <h5> Q {{current_question_index+1}} : {{current_question.question}} </h5>
+          </div>
+          <div class="container" [ngClass]="is_submitted?'bg-blur':''" >
+  
+            <div class="row gap-3" >
+              <section class="option  col-12  d-flex  align-items-center"
+                (click)="current_question.selected_option='alpha'">
+  
+                <span
+                  [ngClass]="current_question.selected_option=='alpha'?'variant-1 material-symbols-outlined rounded-circle':''"
+                  class=" option-circle  border rounded-circle d-block text-center  m-1">
+                  {{current_question.selected_option=='alpha'?'done':'A'}}
+                </span>
+                <span>{{current_question.alpha}}</span>
+              </section>
+              <section class="option col-12 d-flex  align-items-center" (click)="current_question.selected_option='beta'">
+                <span
+                  [ngClass]="current_question.selected_option=='beta'?'variant-1 material-symbols-outlined rounded-circle':''"
+                  class="  rounded-circle  option-circle border d-block text-center  m-1 ">
+                  {{current_question.selected_option=='beta'?'done':'B'}}
+                </span>
+                <span>{{current_question.beta}}</span>
+              </section>
+              <section class="option col-12  d-flex align-items-center "
+                (click)="current_question.selected_option='charlie'">
+                <span
+                  [ngClass]="current_question.selected_option=='charlie'?'variant-1 material-symbols-outlined rounded-circle':''"
+                  class="  option-circle rounded-circle border d-block text-center   m-1">
+                  {{current_question.selected_option=='charlie'?'done':'C'}}
+                </span>
+                <span>{{current_question.charlie}}</span>
+              </section>
+              <section class="option col-12  d-flex align-items-center "
+                (click)="current_question.selected_option='delta'">
+                <span
+                  [ngClass]="current_question.selected_option=='delta'?'variant-1 material-symbols-outlined rounded-circle':''"
+                  class="  option-circle rounded-circle border d-block text-center  m-1">
+                  {{current_question.selected_option=='delta'?'done':'D'}}
+                </span>
+                <span>{{current_question.delta}}</span>
+              </section>
+  
+            </div>
+          </div>
+  
+        </div>
+        <div class="questions-nav-btns">
+            
+        <div class=" container questions-nav-btns ">
+          <div class="section d-flex justify-content-end m-3  row">
+            <button type="button" class="btn btn-primary col m-1"  (click)="moveBackQuestion(current_question_index-1)">Previous</button>
+            <button type="button" class="btn btn-primary  col m-1"  (click)="moveToQuestion(current_question_index+1)">Next</button>
+            <button *ngIf="!is_submitted " type="button" class="btn  col btn-primary m-1"  (click)="submitQuiz()">Submit</button>
+            <a routerLink="/courses" *ngIf="is_submitted" type="button" class="btn col btn-primary m-1"  >Close</a>
+    
+          </div>
+        </div>
+        </div>
+      </section>
+    
+    </div>
+    <div class="alert alert-success alert-dismissible  show position-absolute top-50 start-50 translate-middle " *ngIf="is_submitted"  role="alert">
+      <strong>Test submitted! </strong> Best of luck for the result!
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div> 
+  </div> 
