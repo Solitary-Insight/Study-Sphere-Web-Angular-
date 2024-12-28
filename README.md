@@ -1,2 +1,15 @@
 # Study-Sphere-Web-Angular-
 Study Sphere is a dynamic full-stack website built using Angular framework. It seamlessly integrates Socket.io for real-time communication and MySQL database for efficient data management. With a modern MVC architecture, Study Sphere offers an immersive learning environment for users worldwide.
+![study_sphere_banner](https://github.com/user-attachments/assets/435b5056-b978-490e-8962-1bac50139f1b)
+![quiz-web-12](https://github.com/user-attachments/assets/91346b9c-b1f6-4e30-9394-f83fd9b40a90)
+![quiz-web-11](https://github.com/user-attachments/assets/f736b354-c43b-4331-97b4-f5437550a829)
+![quiz-web-10](https://github.com/user-attachments/assets/f9c5740c-0aa7-440c-8ec8-d2f944ea7c5a)
+![quiz-web-9](https://github.com/user-attachments/assets/9d3f9542-60bd-4b86-b407-0592269aeab2)
+![quiz-web-8](https://github.com/user-attachments/assets/3cafd49d-343d-4bfb-8af5-20f6b0fce876)
+![quiz-web-7](https://github.com/user-attachments/assets/17e091ca-be74-478d-b3da-c9a2d4b8871a)
+![quiz-web-6](https://github.com/user-attachments/assets/31387548-d8a4-420b-87ad-785c4b75af05)
+![quiz-web-5](https://github.com/user-attachments/assets/b1ec4898-72cf-4c47-8b8a-f4658ea92339)
+![quiz-web-4](https://github.com/user-attachments/assets/3d84b100-7496-49f5-acc3-953ec52e2e0d)
+![quiz-web-3](https://github.com/user-attachments/assets/9aa1c5a8-b4bf-4610-83de-4f34badd533e)
+![quiz-web-2](https://github.com/user-attachments/assets/9c245892-46b1-4254-9216-99a0f7908891)
+![quiz-web-1](https://github.com/user-attachments/assets/3d440444-65dd-4688-aeb1-a9ce1d828e5a)
